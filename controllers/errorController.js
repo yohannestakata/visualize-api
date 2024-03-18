@@ -34,7 +34,6 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "fail";
 
-  // Duplicate fields error
   if (err.code === "ER_DUP_ENTRY") err = handleDbDuplicateField(err);
   if (err.name === "JsonWebTokenError") err = handleJwtError();
   if (err.name === "TokenExpiredError") err = handleJwtTokenExpiredError();

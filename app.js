@@ -6,6 +6,9 @@ const cors = require("cors");
 const globalErrorHandler = require("./controllers/errorController");
 const AppError = require("./utils/AppError");
 
+// Routers
+const authRouter = require("./routes/authRoutes");
+
 dotenv.config();
 
 const app = express();
@@ -13,9 +16,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
 
-app.use("/auth", (req, res) => {
-  console.log("hi");
-});
+app.use("/auth", authRouter);
 
 app.all("*", (req, res, next) => {
   next(next(new AppError(`Can't find ${req.originalUrl} on this server`), 404));
