@@ -24,9 +24,6 @@ app.use(
     credentials: true,
   })
 );
-app.use((req, res, next) => {
-  // console.log(req.cookies, "!!!!!!");
-});
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
