@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
 const User = require("../models/userModel");
 
@@ -59,12 +60,32 @@ const login = catchAsync(async (req, res, next) => {
     next(
       new AppError("Please provide your University ID or email and password")
     );
+
+  const user = await User.findById({ uniId });
+
+  if (!user)
+    next(
+      new AppError(
+        "No user by that University ID found. Please sign-up if you don't have an account.",
+        404
+      )
+    );
+
+  console.log(user);
 });
 
 const getSignedUser = catchAsync(async (req, res, next) => {
+  if (!req.cookies.jwt)
+    return res.status(200).json({
+      status: "success",
+      message: "No token available. Please sign-up or login",
+    });
+
   const { id } = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
 
   const user = await User.findById(id);
+
+  if (!user) next(new AppError("No user found", 404));
 
   res.status(200).json({ status: "success", user });
 });

@@ -37,5 +37,6 @@ module.exports = (err, req, res, next) => {
   if (err.code === "ER_DUP_ENTRY") err = handleDbDuplicateField(err);
   if (err.name === "JsonWebTokenError") err = handleJwtError();
   if (err.name === "TokenExpiredError") err = handleJwtTokenExpiredError();
+
   sendError(err, res);
 };

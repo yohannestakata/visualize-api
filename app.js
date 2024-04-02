@@ -1,8 +1,8 @@
-const express = require("express");
-const morgan = require("morgan");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
+import express from "express";
+import morgan from "morgan";
+import dotenv from "dotenv";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
 // Utils and controllers
 const globalErrorHandler = require("./controllers/errorController");
@@ -34,4 +34,4 @@ app.all("*", (req, res, next) => {
 
 app.use(globalErrorHandler);
 
-module.exports = app;
+export default app;
