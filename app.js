@@ -5,12 +5,12 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 // Utils and controllers
-const globalErrorHandler = require("./controllers/errorController");
-const AppError = require("./utils/AppError");
+import globalErrorHandler from "./controllers/errorController";
+import AppError from "./utils/AppError";
 
 // Routes
-const authRouter = require("./routes/authRoutes");
-const userRouter = require("./routes/userRoutes");
+import authRouter from "./routes/authRoutes";
+import userRouter from "./routes/userRoutes";
 
 dotenv.config();
 

@@ -1,17 +1,17 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+import { genSalt, hash } from "bcryptjs";
+import { sign, verify } from "jsonwebtoken";
 
-const AppError = require("../utils/AppError");
-const catchAsync = require("../utils/catchAsync");
+import AppError from "../utils/AppError";
+import catchAsync from "../utils/catchAsync";
 const User = require("../models/userModel");
 
-const signToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+function signToken(id) {
+  return sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN * 24 * 60 * 60 * 1000,
   });
-};
+}
 
-const createSendToken = (user, statusCode, req, res) => {
+function createSendToken(user, statusCode, req, res) {
   const token = signToken(user.id);
 
   res.cookie("jwt", token, {
@@ -31,13 +31,13 @@ const createSendToken = (user, statusCode, req, res) => {
       user,
     },
   });
-};
+}
 
-const signup = catchAsync(async (req, res, next) => {
+export const signup = catchAsync(async (req, res, next) => {
   const { nickname, email, password, uniId, department, role } = req.body;
 
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
+  const salt = await genSalt(10);
+  const hashedPassword = await hash(password, salt);
 
   const tempUserCred = {
     nickname,
@@ -53,7 +53,7 @@ const signup = catchAsync(async (req, res, next) => {
   createSendToken(newUser, 201, req, res);
 });
 
-const login = catchAsync(async (req, res, next) => {
+export const login = catchAsync(async (req, res, next) => {
   const { uniId, password } = req.body;
 
   if (!uniId || password)
@@ -74,14 +74,14 @@ const login = catchAsync(async (req, res, next) => {
   console.log(user);
 });
 
-const getSignedUser = catchAsync(async (req, res, next) => {
+export const getSignedUser = catchAsync(async (req, res, next) => {
   if (!req.cookies.jwt)
     return res.status(200).json({
       status: "success",
       message: "No token available. Please sign-up or login",
     });
 
-  const { id } = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
+  const { id } = verify(req.cookies.jwt, process.env.JWT_SECRET);
 
   const user = await User.findById(id);
 
@@ -89,5 +89,3 @@ const getSignedUser = catchAsync(async (req, res, next) => {
 
   res.status(200).json({ status: "success", user });
 });
-
-module.exports = { signup, login, getSignedUser };

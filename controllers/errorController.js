@@ -1,4 +1,4 @@
-const AppError = require("../utils/AppError");
+import AppError from "../utils/AppError";
 
 function sendError(err, res) {
   if (err.isOperational) {
@@ -25,11 +25,12 @@ function handleDbDuplicateField(err) {
   );
 }
 
-handleJwtError = () => new AppError("Invalid token. Please login again", 401);
-handleJwtTokenExpiredError = () =>
+const handleJwtError = () =>
+  new AppError("Invalid token. Please login again", 401);
+const handleJwtTokenExpiredError = () =>
   new AppError("Your login session has expired. Please login again", 401);
 
-module.exports = (err, req, res, next) => {
+export default function (err, req, res, next) {
   console.log(err);
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "fail";
@@ -39,4 +40,4 @@ module.exports = (err, req, res, next) => {
   if (err.name === "TokenExpiredError") err = handleJwtTokenExpiredError();
 
   sendError(err, res);
-};
+}
