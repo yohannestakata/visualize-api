@@ -3,7 +3,8 @@ import { sign, verify } from "jsonwebtoken";
 
 import AppError from "../utils/AppError";
 import catchAsync from "../utils/catchAsync";
-const User = require("../models/userModel");
+import User from "../models/userModel";
+import bcrypt from "bcryptjs";
 
 function signToken(id) {
   return sign({ id }, process.env.JWT_SECRET, {
@@ -56,12 +57,10 @@ export const signup = catchAsync(async (req, res, next) => {
 export const login = catchAsync(async (req, res, next) => {
   const { uniId, password } = req.body;
 
-  if (!uniId || password)
-    next(
-      new AppError("Please provide your University ID or email and password")
-    );
+  if (!uniId || !password)
+    next(new AppError("Please provide your University ID and password"));
 
-  const user = await User.findById({ uniId });
+  const user = await User.findOne({ uniId: uniId }).select("+password");
 
   if (!user)
     next(
@@ -71,7 +70,10 @@ export const login = catchAsync(async (req, res, next) => {
       )
     );
 
-  console.log(user);
+  const hashedPassword = user.password;
+  const validPass = await bcrypt.compare(password, hashedPassword);
+
+  if (validPass) createSendToken(user, 201, req, res);
 });
 
 export const getSignedUser = catchAsync(async (req, res, next) => {
