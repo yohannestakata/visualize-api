@@ -83,8 +83,6 @@ export const getSignedUser = catchAsync(async (req, res, next) => {
       message: "No token available. Please sign-up or login",
     });
 
-  console.log(req.cookies);
-
   const { id } = verify(req.cookies.jwt, process.env.JWT_SECRET);
 
   const user = await User.findById(id);

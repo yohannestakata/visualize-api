@@ -4,7 +4,7 @@ const modelSchema = Schema({
   name: {
     type: String,
   },
-  url: String,
+  modelUrl: String,
   thumbnailUrl: String,
   department: String,
   course: String,
