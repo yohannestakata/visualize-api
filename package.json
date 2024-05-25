@@ -18,5 +18,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.4",
     "morgan": "^1.10.0"
+  },
+  "scripts": {
+    "vercel-build": "echo hello"
   }
 }
