@@ -1,9 +1,8 @@
-const express = require("express");
-const catchAsync = require("../utils/catchAsync");
+import { Router } from "express";
 const { getUser } = require("../controllers/userController");
 
-const router = new express.Router();
+const router = new Router();
 
 router.route("/:id").get(getUser);
 
-module.exports = router;
+export default router;
