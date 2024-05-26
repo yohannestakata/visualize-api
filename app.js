@@ -12,6 +12,9 @@ import AppError from "./utils/AppError";
 import authRouter from "./routes/authRoutes";
 import userRouter from "./routes/userRoutes";
 import modelRouter from "./routes/modelsRoutes";
+import User from "./models/userModel";
+import catchAsync from "./utils/catchAsync";
+import { verify } from "jsonwebtoken";
 
 dotenv.config();
 
@@ -19,6 +22,18 @@ const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
+
+app.use(
+  catchAsync(async (req, res, next) => {
+    if (!req.cookies.jwt) next();
+    const { id } = verify(req.cookies.jwt, process.env.JWT_SECRET);
+    const user = await User.findById(id);
+    if (!user) next();
+    req.user = user;
+    next();
+  })
+);
+
 app.use(
   cors({
     origin: "http://localhost:5173",
