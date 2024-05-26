@@ -12,6 +12,7 @@ export const uploadModel = catchAsync(async (req, res) => {
 
 export const getModels = catchAsync(async (req, res) => {
   const query = Model.find(req.query);
+  query.sort({ createdAt: -1 });
   const models = await query.exec();
 
   res.status(200).json({ status: "success", data: models });
