@@ -25,6 +25,8 @@ function createSendToken(user, statusCode, req, res) {
 
   user.password = undefined;
 
+  console.log(user);
+
   res.status(statusCode).json({
     status: "success",
     token,
@@ -88,7 +90,6 @@ export const getSignedUser = catchAsync(async (req, res, next) => {
   const user = await User.findById(id);
 
   if (!user) next(new AppError("No user found", 404));
-
 
   res.status(200).json({ status: "success", user });
 });
