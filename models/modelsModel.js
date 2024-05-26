@@ -9,10 +9,18 @@ const modelSchema = Schema({
   thumbnailUrl: String,
   department: String,
   course: String,
-  uploadedBy: {
+  teacher: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Users",
     required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  drafted: {
+    type: Boolean,
+    default: false,
   },
 });
 

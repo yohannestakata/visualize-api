@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { uploadModel } from "../controllers/modelController";
+import { getModels, uploadModel } from "../controllers/modelController";
 import multer from "multer";
 
 const upload = multer();
 
 const router = new Router();
 
-router.route("/upload").post(uploadModel);
+router.route("/").post(uploadModel).get(getModels);
 
 export default router;
