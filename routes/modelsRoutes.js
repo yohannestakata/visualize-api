@@ -6,12 +6,6 @@ const upload = multer();
 
 const router = new Router();
 
-router.route("/upload").post(
-  upload.fields([
-    { name: "thumbnail", maxCount: 1 },
-    { name: "model", maxCount: 1 },
-  ]),
-  uploadModel
-);
+router.route("/upload").post(uploadModel);
 
 export default router;

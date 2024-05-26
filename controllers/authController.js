@@ -89,5 +89,6 @@ export const getSignedUser = catchAsync(async (req, res, next) => {
 
   if (!user) next(new AppError("No user found", 404));
 
+
   res.status(200).json({ status: "success", user });
 });
