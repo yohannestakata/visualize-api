@@ -25,8 +25,6 @@ function createSendToken(user, statusCode, req, res) {
 
   user.password = undefined;
 
-  console.log(user);
-
   res.status(statusCode).json({
     status: "success",
     token,
@@ -76,6 +74,7 @@ export const login = catchAsync(async (req, res, next) => {
   const validPass = await bcrypt.compare(password, hashedPassword);
 
   if (validPass) createSendToken(user, 201, req, res);
+  else next(new AppError("Incorrect password", 401));
 });
 
 export const getSignedUser = catchAsync(async (req, res, next) => {
