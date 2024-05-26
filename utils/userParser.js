@@ -1,6 +1,6 @@
-import User from "./models/userModel";
-import catchAsync from "./utils/catchAsync";
+import User from "../models/userModel";
 import { verify } from "jsonwebtoken";
+import catchAsync from "./catchAsync";
 
 export default catchAsync(async (req, res, next) => {
   if (!req.cookies.jwt) next();
