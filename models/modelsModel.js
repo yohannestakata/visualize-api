@@ -22,6 +22,20 @@ const modelSchema = Schema({
     type: Boolean,
     default: false,
   },
+  definitions: {
+    type: [
+      {
+        title: {
+          type: String,
+          required: true,
+        },
+        definition: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+  },
 });
 
 const Model = model("Model", modelSchema);
