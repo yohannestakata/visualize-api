@@ -17,3 +17,12 @@ export const getModels = catchAsync(async (req, res) => {
 
   res.status(200).json({ status: "success", data: models });
 });
+
+export const getModel = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const model = await Model.findById(id);
+
+  console.log(req.query);
+
+  res.status(200).json({ status: 200, data: model });
+});
