@@ -26,3 +26,12 @@ export const getModel = catchAsync(async (req, res) => {
 
   res.status(200).json({ status: 200, data: model });
 });
+
+export const updateModel = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const updatedModel = await Model.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
+
+  res.status(200).json({ status: 200, data: updatedModel });
+});
