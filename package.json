@@ -22,6 +22,7 @@
     "multer": "^1.4.5-lts.1"
   },
   "scripts": {
-    "vercel-build": "echo hello"
+    "vercel-build": "echo hello",
+    "start": "bun --watch api/index.js"
   }
 }
