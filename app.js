@@ -25,7 +25,7 @@ app.set("trust proxy", 1);
 
 app.use(
   session({
-    // secret: process.env.PASSPORT_SECRET,
+    secret: process.env.PASSPORT_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
