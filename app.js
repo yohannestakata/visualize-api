@@ -50,6 +50,7 @@ if (process.env.NODE_ENV === "production")
     cors({
       origin: "https://visualize-qakf.onrender.com",
       credentials: true,
+      exposedHeaders: ["set-cookie"],
     })
   );
 // app.use(cors());
