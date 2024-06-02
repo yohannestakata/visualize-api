@@ -21,7 +21,7 @@ function createSendToken(user, statusCode, req, res) {
     ),
     httpOnly: false,
     path: "https://visualize-qakf.onrender.com/",
-    // secure: req.secure || req.headers["x-forwarded-proto"] === "https",
+    secure: req.secure || req.headers["x-forwarded-proto"] === "https",
   });
 
   user.password = undefined;
