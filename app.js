@@ -31,7 +31,7 @@ app.use(
     cookie: {
       secure: true,
       sameSite: "none",
-      Domain: "https://visualize-api.onrender.com",
+      domain: "visualize-api.onrender.com",
       path: "/",
     },
   })
