@@ -23,19 +23,19 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.set("trust proxy", 1);
 
-app.use(
-  session({
-    secret: process.env.PASSPORT_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      secure: true,
-      sameSite: "none",
-      domain: "visualize-api.onrender.com",
-      path: "/",
-    },
-  })
-);
+// app.use(
+//   session({
+//     secret: process.env.PASSPORT_SECRET,
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//       secure: true,
+//       sameSite: "none",
+//       domain: "visualize-api.onrender.com",
+//       path: "/",
+//     },
+//   })
+// );
 
 app.use(userParser());
 if (process.env.NODE_ENV === "development")
