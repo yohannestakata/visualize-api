@@ -32,7 +32,7 @@ else
   app.use(
     cors({
       origin: "https://visualize-tau.vercel.app/",
-      credentials: treu,
+      credentials: true,
     })
   );
 app.use("/auth", authRouter);
