@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === "development")
       credentials: true,
     })
   );
-else
+if (process.env.NODE_ENV === "production")
   app.use(
     cors({
       origin: "https://visualize-tau.vercel.app",
