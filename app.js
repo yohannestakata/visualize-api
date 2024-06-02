@@ -21,21 +21,21 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(userParser());
-// if (process.env.NODE_ENV === "development")
-//   app.use(
-//     cors({
-//       origin: "http://localhost:5173",
-//       credentials: true,
-//     })
-//   );
-// if (process.env.NODE_ENV === "production")
-//   app.use(
-//     cors({
-//       origin: "https://visualize-tau.vercel.app",
-//       credentials: true,
-//     })
-//   );
-app.use(cors());
+if (process.env.NODE_ENV === "development")
+  app.use(
+    cors({
+      origin: "http://localhost:5173",
+      credentials: true,
+    })
+  );
+if (process.env.NODE_ENV === "production")
+  app.use(
+    cors({
+      origin: "https://visualize-tau.vercel.app",
+      credentials: true,
+    })
+  );
+// app.use(cors());
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/models", modelRouter);
