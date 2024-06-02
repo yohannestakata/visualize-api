@@ -20,6 +20,22 @@ const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
+app.set("trust proxy", 1);
+
+app.use(
+  session({
+    // secret: process.env.PASSPORT_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: true,
+      sameSite: "none",
+      Domain: "https://visualize-api.onrender.com",
+      path: "/",
+    },
+  })
+);
+
 app.use(userParser());
 if (process.env.NODE_ENV === "development")
   app.use(
