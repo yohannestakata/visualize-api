@@ -20,8 +20,9 @@ function createSendToken(user, statusCode, req, res) {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: false,
-    path: "https://visualize-qakf.onrender.com/",
+    path: "/",
     secure: req.secure || req.headers["x-forwarded-proto"] === "https",
+    domain: "visualize-qakf.onrender.com/",
   });
 
   user.password = undefined;
