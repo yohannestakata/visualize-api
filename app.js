@@ -3,7 +3,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import session from "express-session";
+// import session from "express-session";
 
 // Utils and controllers
 import globalErrorHandler from "./controllers/errorController";
@@ -21,7 +21,7 @@ const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 
 // app.use(
 //   session({
