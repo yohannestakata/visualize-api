@@ -21,20 +21,12 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(userParser());
-if (process.env.NODE_ENV === "development")
-  app.use(
-    cors({
-      origin: "http://localhost:5173",
-      credentials: true,
-    })
-  );
-else
-  app.use(
-    cors({
-      origin: "https://visualize-tau.vercel.app",
-      credentials: true,
-    })
-  );
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/models", modelRouter);
