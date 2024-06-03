@@ -18,10 +18,6 @@ import modelRouter from "./routes/modelsRoutes";
 dotenv.config();
 
 const app = express();
-app.use(express.json());
-app.use(morgan("dev"));
-app.use(cookieParser());
-app.use(userParser());
 
 if (process.env.NODE_ENV === "development")
   app.use(
@@ -39,6 +35,11 @@ if (process.env.NODE_ENV === "production")
       exposedHeaders: ["set-cookie"],
     })
   );
+
+app.use(express.json());
+app.use(morgan("dev"));
+app.use(cookieParser());
+app.use(userParser());
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
