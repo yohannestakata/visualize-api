@@ -21,23 +21,8 @@ const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
-// app.set("trust proxy", 1);
-
-// app.use(
-//   session({
-//     secret: process.env.PASSPORT_SECRET,
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: {
-//       secure: true,
-//       sameSite: "none",
-//       domain: "visualize-api.onrender.com",
-//       path: "/",
-//     },
-//   })
-// );
-
 app.use(userParser());
+
 if (process.env.NODE_ENV === "development")
   app.use(
     cors({
@@ -45,6 +30,7 @@ if (process.env.NODE_ENV === "development")
       credentials: true,
     })
   );
+
 if (process.env.NODE_ENV === "production")
   app.use(
     cors({
@@ -53,7 +39,7 @@ if (process.env.NODE_ENV === "production")
       exposedHeaders: ["set-cookie"],
     })
   );
-// app.use(cors());
+
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/models", modelRouter);
