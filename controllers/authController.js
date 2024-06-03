@@ -14,7 +14,7 @@ function signToken(id) {
 
 function createSendToken(user, statusCode, req, res) {
   const token = signToken(user.id);
-  const cookieProps = {};
+  let cookieProps = {};
 
   if (process.env.NODE_ENV === "production")
     cookieProps = {
