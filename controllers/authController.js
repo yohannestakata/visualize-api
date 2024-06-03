@@ -23,6 +23,7 @@ function createSendToken(user, statusCode, req, res) {
     path: "/",
     secure: req.secure || req.headers["x-forwarded-proto"] === "https",
     domain: "visualize-api.onrender.com",
+    sameSite: "None",
   });
 
   user.password = undefined;
