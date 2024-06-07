@@ -33,3 +33,9 @@ export const updateModel = catchAsync(async (req, res) => {
 
   res.status(200).json({ status: 200, data: updatedModel });
 });
+
+export const deleteModel = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  await Model.findByIdAndDelete(id);
+  res.status(200).json({ status: "success" });
+});

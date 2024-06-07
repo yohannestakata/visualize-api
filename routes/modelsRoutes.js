@@ -4,12 +4,12 @@ import {
   uploadModel,
   getModel,
   updateModel,
+  deleteModel,
 } from "../controllers/modelController";
-import multer from "multer";
 
 const router = new Router();
 
 router.route("/").post(uploadModel).get(getModels);
-router.route("/:id").get(getModel).patch(updateModel);
+router.route("/:id").get(getModel).patch(updateModel).delete(deleteModel);
 
 export default router;
