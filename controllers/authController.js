@@ -29,7 +29,7 @@ function createSendToken(user, statusCode, req, res) {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true,
+    // httpOnly: true,
     ...cookieProps,
   });
 
@@ -53,7 +53,7 @@ export const signup = catchAsync(async (req, res, next) => {
   const tempUserCred = {
     nickname,
     email,
-    uniId,
+    uniId: uniId.trim(),
     department,
     password: hashedPassword,
     role: role ? role : "Student",
@@ -70,7 +70,7 @@ export const login = catchAsync(async (req, res, next) => {
   if (!uniId || !password)
     next(new AppError("Please provide your University ID and password"));
 
-  const user = await User.findOne({ uniId: uniId }).select("+password");
+  const user = await User.findOne({ uniId: uniId.trim() }).select("+password");
 
   if (!user)
     next(
