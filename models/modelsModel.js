@@ -20,7 +20,7 @@ const modelSchema = Schema({
   },
   drafted: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   definitions: {
     type: [
