@@ -11,7 +11,7 @@ const modelSchema = Schema({
   course: String,
   teacher: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Users",
+    ref: "User",
     required: true,
   },
   createdAt: {

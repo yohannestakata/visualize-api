@@ -11,7 +11,7 @@ export const uploadModel = catchAsync(async (req, res) => {
 });
 
 export const getModels = catchAsync(async (req, res) => {
-  const query = Model.find(req.query);
+  const query = Model.find(req.query).populate("teacher");
   query.sort({ createdAt: -1 });
   const models = await query.exec();
 
