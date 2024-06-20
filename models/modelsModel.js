@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const modelSchema = Schema({
   modelTitle: {
@@ -7,10 +7,10 @@ const modelSchema = Schema({
   },
   modelUrl: String,
   thumbnailUrl: String,
-  department: String,
-  course: String,
+  department: { type: Schema.Types.ObjectId, ref: "Departments" },
+  course: { type: Schema.Types.ObjectId, ref: "Courses" },
   teacher: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
