@@ -15,6 +15,7 @@ import authRouter from "./routes/authRoutes";
 import userRouter from "./routes/userRoutes";
 import modelRouter from "./routes/modelsRoutes";
 import departmentRouter from "./routes/departmentRoutes";
+import courseRouter from "./routes/courseRoutes";
 
 dotenv.config();
 
@@ -46,6 +47,7 @@ app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/models", modelRouter);
 app.use("/departments", departmentRouter);
+app.use("/courses", courseRouter);
 
 app.all("*", (req, res, next) => {
   next(next(new AppError(`Can't find ${req.originalUrl} on this server`), 404));
