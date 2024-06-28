@@ -36,16 +36,15 @@ const handleJwtTokenExpiredError = (res) => {
   );
 };
 
-const handleDbDuplicateKey = (error) => {
-  console.log("Duplicate key err", error.message);
-  return new AppError(error.message, 401);
-};
+const handleDbDuplicateKey = (error) => new AppError(error.message, 401);
 
 const handleConnectionError = () =>
   new AppError(
     "Encountering server connection issues. Please try again later",
     500
   );
+
+const handleValidatorError = (err) => new AppError(err.message, 401);
 
 export default function (err, req, res, next) {
   console.error(err);
@@ -57,6 +56,7 @@ export default function (err, req, res, next) {
   if (err.name === "JsonWebTokenError") err = handleJwtError();
   if (err.name === "TokenExpiredError") err = handleJwtTokenExpiredError(res);
   if (err.code === "ECONNREFUSED") err = handleConnectionError();
+  if (err.name === "ValidationError") err = handleValidatorError(err);
 
   sendError(err, res);
 }
