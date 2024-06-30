@@ -8,7 +8,7 @@ export const createDepartment = catchAsync(async (req, res) => {
 });
 
 export const getAllDepartments = catchAsync(async (req, res) => {
-  const departments = await Departments.find();
+  const departments = await Departments.find().populate("courses");
   res.status(200).json({ status: "success", data: departments });
 });
 
