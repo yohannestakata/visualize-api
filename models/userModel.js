@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const userSchema = mongoose.Schema({
   nickname: String,
   email: String,
-  department: String,
+  department: { type: Schema.Types.ObjectId, ref: "Departments" },
   role: String,
   uniId: {
     type: String,
