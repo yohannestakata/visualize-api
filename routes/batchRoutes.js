@@ -1,11 +1,9 @@
 import { Router } from "express";
 import Batches from "../models/batchesModel";
+import { createBatch } from "../controllers/batchController";
 
 const router = Router();
 
-router.route("/").post(async (req, res) => {
-  const newBatch = await Batches.create(req.body);
-  res.json({ data: newBatch });
-});
+router.route("/").post(createBatch);
 
 export default router;
