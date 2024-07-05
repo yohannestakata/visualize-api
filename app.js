@@ -16,6 +16,7 @@ import userRouter from "./routes/userRoutes";
 import modelRouter from "./routes/modelsRoutes";
 import departmentRouter from "./routes/departmentRoutes";
 import courseRouter from "./routes/courseRoutes";
+import batchRouter from "./routes/batchRoutes";
 
 dotenv.config();
 
@@ -48,6 +49,7 @@ app.use("/users", userRouter);
 app.use("/models", modelRouter);
 app.use("/departments", departmentRouter);
 app.use("/courses", courseRouter);
+app.use("/batches", batchRouter);
 
 app.all("*", (req, res, next) => {
   next(next(new AppError(`Can't find ${req.originalUrl} on this server`), 404));
