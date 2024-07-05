@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 const userSchema = Schema({
   nickname: String,
   email: String,
-  department: { type: Schema.Types.ObjectId, ref: "Departments" },
+  department: { type: [Schema.Types.ObjectId], ref: "Departments" },
   role: String,
   uniId: {
     type: String,
