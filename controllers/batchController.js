@@ -7,9 +7,14 @@ export const createBatch = catchAsync(async (req, res) => {
   const { sections, department, year } = req.body;
 
   const sectionPromises = sections.map(async (section) => {
-    const { _id: repId } = await User.findOne({
-      uniId: section.representative,
-    });
+    let repId = undefined;
+
+    if (section.representative) {
+      const user = await User.findOne({
+        uniId: section.representative,
+      });
+      if (user) repId = user._id;
+    }
 
     const newSection = await Section.create({
       representative: repId,

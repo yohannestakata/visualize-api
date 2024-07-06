@@ -11,13 +11,12 @@ export const uploadModel = catchAsync(async (req, res) => {
 });
 
 export const getModels = catchAsync(async (req, res) => {
-  console.log(req.user, "getModels");
   const user = req.user;
 
   if (user.role === "Student")
     req.query = {
       ...req.query,
-      department: user.department.toLowerCase(),
+      department: user.department,
       drafted: false,
     };
 

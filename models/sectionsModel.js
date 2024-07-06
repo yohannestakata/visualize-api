@@ -10,11 +10,11 @@ const sectionsSchema = Schema({
     ref: "User",
   },
   representative: {
-    type: [Schema.Types.ObjectId],
+    type: Schema.Types.ObjectId,
     ref: "User",
   },
 });
 
-const model = model("Sections", sectionsSchema);
+const Section = model("Sections", sectionsSchema);
 
-export default model;
+export default Section;
