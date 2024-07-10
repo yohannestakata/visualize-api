@@ -7,7 +7,9 @@ export const createSemester = catchAsync(async (req, res) => {
 });
 
 export const getSemesters = catchAsync(async (req, res) => {
-  const semesters = await Semesters.find().populate({
+  const semesters = await Semesters.find({
+    ...req.query,
+  }).populate({
     path: "batches",
     populate: { path: "sections courses" },
   });
