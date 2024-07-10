@@ -23,8 +23,13 @@ export const getUsers = catchAsync(async (req, res) => {
 });
 
 export const updateUser = catchAsync(async (req, res) => {
-  const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
+  const { sections, ...otherUpdates } = req.body;
+
+  const updatedUser = await User.findByIdAndUpdate(
+    req.params.id,
+    { $addToSet: { sections: sections }, ...otherUpdates },
+    { new: true }
+  );
+
   res.status(200).json({ status: "success", data: updatedUser });
 });
