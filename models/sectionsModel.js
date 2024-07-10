@@ -13,6 +13,10 @@ const sectionsSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  department: {
+    type: Schema.Types.ObjectId,
+    ref: "Departments",
+  },
 });
 
 const Section = model("Sections", sectionsSchema);

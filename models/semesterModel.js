@@ -11,6 +11,25 @@ const semesterSchema = Schema({
     type: [Schema.Types.ObjectId],
     ref: "Batches",
   },
+  department: {
+    type: Schema.Types.ObjectId,
+    ref: "Departments",
+  },
+  open: {
+    type: Boolean,
+    default: true,
+  },
+});
+
+semesterSchema.pre("save", async function (next) {
+  const newSemester = this;
+  if (newSemester.isNew) {
+    const existingSemesters = await Semesters.find();
+    await Promise.all(
+      existingSemesters.map((semester) => semester.updateOne({ open: false }))
+    );
+  }
+  next();
 });
 
 const Semesters = model("Semesters", semesterSchema);

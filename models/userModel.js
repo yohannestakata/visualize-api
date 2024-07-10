@@ -10,6 +10,7 @@ const userSchema = Schema({
     unique: true,
   },
   password: { type: String, select: false },
+  sections: { type: [Schema.Types.ObjectId], ref: "Sections" },
 });
 
 const User = model("User", userSchema);

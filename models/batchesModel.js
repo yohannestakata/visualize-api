@@ -13,6 +13,10 @@ const batchSchema = Schema({
     type: [Schema.Types.ObjectId],
     ref: "Sections",
   },
+  courses: {
+    type: [Schema.Types.ObjectId],
+    ref: "Courses",
+  },
 });
 
 const Batches = model("Batches", batchSchema);

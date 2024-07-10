@@ -15,6 +15,18 @@ const coursesSchema = Schema({
     type: String,
     required: true,
   },
+  departments: {
+    type: [Schema.Types.ObjectId],
+    ref: "Departments",
+  },
+  batches: {
+    type: [Schema.Types.ObjectId],
+    ref: "Batches",
+  },
+  teacher: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Courses = model("Courses", coursesSchema);

@@ -1,9 +1,16 @@
 import { Router } from "express";
-import Batches from "../models/batchesModel";
-import { createBatch } from "../controllers/batchController";
+import {
+  createBatch,
+  updateBatch,
+  getBatches,
+  getBatch,
+  deleteCourseFromBatch,
+} from "../controllers/batchController";
 
 const router = Router();
 
-router.route("/").post(createBatch);
+router.route("/:batchId/courses/:courseId").delete(deleteCourseFromBatch);
+router.route("/:id").patch(updateBatch).get(getBatch);
+router.route("/").post(createBatch).get(getBatches);
 
 export default router;
