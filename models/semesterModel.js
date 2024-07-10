@@ -24,7 +24,12 @@ const semesterSchema = Schema({
 semesterSchema.pre("save", async function (next) {
   const newSemester = this;
   if (newSemester.isNew) {
-    const existingSemesters = await Semesters.find();
+    // Check if it's a new document
+    const existingSemesters = await Semesters.find({
+      // year: newSemester.year,
+      // half: newSemester.half,
+      department: newSemester.department,
+    });
     await Promise.all(
       existingSemesters.map((semester) => semester.updateOne({ open: false }))
     );
