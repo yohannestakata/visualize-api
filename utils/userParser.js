@@ -4,10 +4,10 @@ import catchAsync from "./catchAsync";
 
 export default () =>
   catchAsync(async (req, res, next) => {
-    console.log(req.headers.authorization);
     if (!req.headers.authorization) return next();
     const { id } = verify(req.headers.authorization, process.env.JWT_SECRET);
     const user = await User.findById(id);
+    console.log("User parser", "user");
     if (!user) return next();
     req.user = user;
     next();

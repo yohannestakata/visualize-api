@@ -7,14 +7,22 @@ export const createSemester = catchAsync(async (req, res) => {
 });
 
 export const getSemesters = catchAsync(async (req, res) => {
-  const semesters = await Semesters.find({
-    ...req.query,
-    department: req.user.department,
-  }).populate({
-    path: "batches",
-    populate: { path: "sections courses" },
-  });
-  // .sort(-1);
+  const user = req.user;
+  let semestersQuery;
+  if (user.role === "teacher")
+    semestersQuery = Semesters.find({ ...req.query });
+  else
+    semestersQuery = Semesters.find({
+      ...req.query,
+      department:
+        req.user.role.toLowerCase() === "admin" ? req.user.department : null,
+    });
+  const semesters = await semestersQuery
+    .populate({
+      path: "batches",
+      populate: { path: "sections courses" },
+    })
+    .exec();
   res.status(200).json({ status: "success", data: semesters });
 });
 
