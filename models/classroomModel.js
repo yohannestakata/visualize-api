@@ -5,6 +5,10 @@ const classroomSchema = Schema({
     type: String,
     required: true,
   },
+  departments: {
+    type: [Schema.Types.ObjectId],
+    ref: "Departments",
+  },
   sections: {
     type: [Schema.Types.ObjectId],
     ref: "Sections",

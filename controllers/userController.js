@@ -18,7 +18,7 @@ export const createUser = catchAsync(async (req, res) => {
 });
 
 export const getUsers = catchAsync(async (req, res) => {
-  const users = await User.find();
+  const users = await User.find().populate("sections");
   res.status(200).json({ status: "success", data: users });
 });
 
