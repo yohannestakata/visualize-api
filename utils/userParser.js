@@ -7,7 +7,6 @@ export default () =>
     if (!req.headers.authorization) return next();
     const { id } = verify(req.headers.authorization, process.env.JWT_SECRET);
     const user = await User.findById(id);
-    console.log("User parser", "user");
     if (!user) return next();
     req.user = user;
     next();

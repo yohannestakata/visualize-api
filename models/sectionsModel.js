@@ -5,10 +5,6 @@ const sectionsSchema = Schema({
     type: String,
     required: true,
   },
-  students: {
-    type: [Schema.Types.ObjectId],
-    ref: "User",
-  },
   representative: {
     type: Schema.Types.ObjectId,
     ref: "User",

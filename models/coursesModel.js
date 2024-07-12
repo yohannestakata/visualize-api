@@ -27,6 +27,10 @@ const coursesSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  students: {
+    type: [Schema.Types.ObjectId],
+    ref: "User",
+  },
 });
 
 const Courses = model("Courses", coursesSchema);

@@ -31,7 +31,7 @@ export const getModels = catchAsync(async (req, res) => {
 
 export const getModel = catchAsync(async (req, res) => {
   const id = req.params.id;
-  const model = await Model.findById(id);
+  const model = await Model.findById(id).populate("teacher");
 
   res.status(200).json({ status: 200, data: model });
 });

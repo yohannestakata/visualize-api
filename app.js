@@ -19,6 +19,7 @@ import courseRouter from "./routes/courseRoutes";
 import batchRouter from "./routes/batchRoutes";
 import sectionRouter from "./routes/sectionRoutes";
 import semesterRouter from "./routes/semesterRoutes";
+import classroomRouter from "./routes/classroomRoutes";
 
 dotenv.config();
 
@@ -54,6 +55,7 @@ app.use("/courses", courseRouter);
 app.use("/batches", batchRouter);
 app.use("/sections", sectionRouter);
 app.use("/semesters", semesterRouter);
+app.use("/classrooms", classroomRouter);
 
 app.all("*", (req, res, next) => {
   next(next(new AppError(`Can't find ${req.originalUrl} on this server`), 404));

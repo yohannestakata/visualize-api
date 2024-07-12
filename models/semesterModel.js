@@ -24,7 +24,6 @@ const semesterSchema = Schema({
 semesterSchema.pre("save", async function (next) {
   const newSemester = this;
   if (newSemester.isNew) {
-    // Check if it's a new document
     const existingSemesters = await Semesters.find({
       // year: newSemester.year,
       // half: newSemester.half,

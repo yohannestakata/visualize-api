@@ -1,3 +1,4 @@
+import Courses from "../models/coursesModel";
 import User from "../models/userModel";
 import AppError from "../utils/AppError";
 import catchAsync from "../utils/catchAsync";
@@ -32,4 +33,24 @@ export const updateUser = catchAsync(async (req, res) => {
   );
 
   res.status(200).json({ status: "success", data: updatedUser });
+});
+
+export const registerUser = catchAsync(async (req, res) => {
+  const { sections, courses } = req.body;
+
+  const updatedUser = await User.findByIdAndUpdate(
+    req.params.id,
+    { $addToSet: { sections: sections } },
+    { new: true }
+  );
+
+  const updatePromises = courses.map(async (courseId) => {
+    return await Courses.findByIdAndUpdate(courseId, {
+      $addToSet: { students: updatedUser ? updatedUser._id : req.params.id },
+    });
+  });
+
+  await Promise.all(updatePromises);
+
+  res.status(200).json({ status: "success" });
 });

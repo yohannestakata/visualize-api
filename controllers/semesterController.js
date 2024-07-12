@@ -9,14 +9,23 @@ export const createSemester = catchAsync(async (req, res) => {
 export const getSemesters = catchAsync(async (req, res) => {
   const user = req.user;
   let semestersQuery;
-  if (user.role === "teacher")
+  if (user.role.toLowerCase() === "teacher")
     semestersQuery = Semesters.find({ ...req.query });
-  else
+  else if (user.role.toLowerCase() === "admin")
     semestersQuery = Semesters.find({
       ...req.query,
-      department:
-        req.user.role.toLowerCase() === "admin" ? req.user.department : null,
+      department: req.user.department,
     });
+  else if (user.role.toLowerCase() === "student") {
+    semestersQuery = Semesters.find({
+      ...req.query,
+      department: req.user.department[0],
+      open: true,
+    });
+  } else {
+    semestersQuery = Semesters.find();
+  }
+
   const semesters = await semestersQuery
     .populate({
       path: "batches",

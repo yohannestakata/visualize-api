@@ -5,7 +5,7 @@ const classroomSchema = Schema({
     type: String,
     required: true,
   },
-  departments: {
+  department: {
     type: [Schema.Types.ObjectId],
     ref: "Departments",
   },
