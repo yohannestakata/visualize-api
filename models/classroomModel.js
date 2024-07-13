@@ -15,11 +15,11 @@ const classroomSchema = Schema({
   },
   teacher: {
     type: [Schema.Types.ObjectId],
-    ref: "Teachers",
+    ref: "User",
   },
   models: {
     type: [Schema.Types.ObjectId],
-    ref: "Models",
+    ref: "Model",
   },
   course: {
     type: Schema.Types.ObjectId,

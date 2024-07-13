@@ -13,14 +13,15 @@ export const uploadModel = catchAsync(async (req, res) => {
 export const getModels = catchAsync(async (req, res) => {
   const user = req.user;
 
-  if (user.role === "Student")
+  if (user.role.toLowerCase() === "student")
     req.query = {
       ...req.query,
       department: user.department,
       drafted: false,
     };
 
-  if (user.role === "Teacher") req.query = { ...req.query, teacher: user._id };
+  if (user.role.toLowerCase() === "teacher")
+    req.query = { ...req.query, teacher: user._id };
 
   const query = Model.find(req.query).populate("teacher");
   query.sort({ createdAt: -1 });
