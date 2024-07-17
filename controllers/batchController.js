@@ -52,8 +52,8 @@ export const deleteCourseFromBatch = catchAsync(async (req, res) => {
   const { courseId, batchId } = req.params;
   const updatedBatch = await Batches.findByIdAndUpdate(
     batchId,
-    { $pull: { courses: courseId } }, // Use $pull operator
-    { new: true } // Return the updated document
+    { $pull: { courses: courseId } },
+    { new: true }
   );
 
   res.status(200).json({ status: "success", data: updatedBatch });

@@ -25,10 +25,17 @@ const classroomSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: "Courses",
   },
-  exam: {
-    type: Schema.Types.ObjectId,
-    ref: "Exams",
-  },
+  exam: [
+    {
+      question: String,
+      options: {
+        type: [String],
+        min: [4, "4 options are mandatory for a question"],
+        max: [4, "Question can't have more than 4 options"],
+      },
+      correctOption: Number,
+    },
+  ],
 });
 
 const Classrooms = model("Classrooms", classroomSchema);
