@@ -11,6 +11,8 @@ const userSchema = Schema({
   },
   password: { type: String, select: false },
   sections: { type: [Schema.Types.ObjectId], ref: "Sections" },
+  streak: { type: Number, default: 0 },
+  lastStreakDate: Date,
   scores: [
     {
       score: Number,

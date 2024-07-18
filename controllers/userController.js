@@ -54,3 +54,56 @@ export const registerUser = catchAsync(async (req, res) => {
 
   res.status(200).json({ status: "success" });
 });
+
+export const updateScore = catchAsync(async (req, res) => {
+  const user = await User.findById(req.params.id).populate("scores");
+  const { newScore } = req.body;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const existingScore = user.scores.find((score) => {
+    const scoreDate = new Date(score.date);
+    scoreDate.setHours(0, 0, 0, 0);
+    return scoreDate.getTime() === today.getTime();
+  });
+
+  if (existingScore) {
+    existingScore.score += Number(newScore);
+  } else {
+    user.scores.push({ score: newScore, date: new Date() });
+  }
+
+  await user.save();
+
+  res.status(200).json({ message: "Score updated" });
+});
+
+export const updateStreak = catchAsync(async (req, res) => {
+  const userId = req.params.id;
+
+  const user = await User.findById(userId);
+
+  const yesterday = new Date();
+  yesterday.setHours(0, 0, 0, 0);
+  yesterday.setDate(new Date().getDate() - 1);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const lastStreakDate = new Date(user.lastStreakDate) || new Date(0);
+  lastStreakDate.setHours(0, 0, 0, 0);
+
+  if (lastStreakDate.getTime() === yesterday.getTime()) {
+    user.streak++;
+  } else if (lastStreakDate.getTime() === today.getTime()) {
+    user.streak = user.streak;
+  } else {
+    user.streak = 1;
+  }
+
+  user.lastStreakDate = today;
+  await user.save();
+
+  res.status(200).json({ streak: user.streak });
+});

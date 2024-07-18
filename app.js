@@ -20,6 +20,7 @@ import batchRouter from "./routes/batchRoutes";
 import sectionRouter from "./routes/sectionRoutes";
 import semesterRouter from "./routes/semesterRoutes";
 import classroomRouter from "./routes/classroomRoutes";
+import { updateStreak } from "./controllers/userController";
 
 dotenv.config();
 
