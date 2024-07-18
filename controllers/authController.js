@@ -96,7 +96,7 @@ export const getSignedUser = catchAsync(async (req, res, next) => {
 
   const { id } = verify(req.body.token, process.env.JWT_SECRET);
 
-  const user = await User.findById(id);
+  const user = await User.findById(id).populate("sections");
 
   if (!user) next(new AppError("No user found", 404));
 

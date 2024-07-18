@@ -36,6 +36,8 @@ const classroomSchema = Schema({
       correctOption: Number,
     },
   ],
+  activities: [Date],
+  examStat: [Date],
 });
 
 const Classrooms = model("Classrooms", classroomSchema);

@@ -19,7 +19,9 @@ export const getClassrooms = catchAsync(async (req, res) => {
       sections: { $in: sectionIds },
     }).populate("course teacher models");
   } else if (req.user.role.toLowerCase() === "teacher") {
-    classroomQuery = Classrooms.find({ teacher: req.user._id });
+    classroomQuery = Classrooms.find({ teacher: req.user._id }).populate(
+      "department sections"
+    );
   } else classroomQuery = Classrooms.find({ department: req.user.department });
 
   const classrooms = await classroomQuery.populate("models").exec();
@@ -40,5 +42,25 @@ export const updateClassroom = catchAsync(async (req, res) => {
       new: true,
     }
   );
+  res.status(200).json({ status: "success", data: updatedClassroom });
+});
+
+export const addActivity = catchAsync(async (req, res) => {
+  const classroomId = req.params.id;
+
+  const updatedClassroom = await Classrooms.findByIdAndUpdate(classroomId, {
+    $push: { activities: new Date() },
+  });
+
+  res.status(200).json({ status: "success", data: updatedClassroom });
+});
+
+export const addExamActivity = catchAsync(async (req, res) => {
+  const classroomId = req.params.id;
+
+  const updatedClassroom = await Classrooms.findByIdAndUpdate(classroomId, {
+    $push: { examStat: new Date() },
+  });
+
   res.status(200).json({ status: "success", data: updatedClassroom });
 });

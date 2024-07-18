@@ -11,6 +11,14 @@ const userSchema = Schema({
   },
   password: { type: String, select: false },
   sections: { type: [Schema.Types.ObjectId], ref: "Sections" },
+  scores: [
+    {
+      score: Number,
+      date: {
+        type: Date,
+      },
+    },
+  ],
 });
 
 const User = model("User", userSchema);
