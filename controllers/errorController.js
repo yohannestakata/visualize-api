@@ -47,7 +47,7 @@ const handleConnectionError = () =>
 const handleValidatorError = (err) => new AppError(err.message, 401);
 
 export default function (err, req, res, next) {
-  console.error(err);
+  console.error(err.message);
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "fail";
 
