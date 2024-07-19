@@ -21,6 +21,10 @@ const userSchema = Schema({
       },
     },
   ],
+  representing: {
+    type: Schema.Types.ObjectId,
+    ref: "Sections",
+  },
 });
 
 const User = model("User", userSchema);

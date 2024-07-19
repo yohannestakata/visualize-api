@@ -60,11 +60,15 @@ export const deleteCourseFromBatch = catchAsync(async (req, res) => {
 });
 
 export const getBatches = catchAsync(async (req, res) => {
-  const batches = await Batches.find({ department: req.user.department });
+  const batches = await Batches.find({
+    department: req.user.department,
+  }).populate("sections");
   res.status(200).json({ status: "success", data: batches });
 });
 
 export const getBatch = catchAsync(async (req, res) => {
-  const batch = await Batches.findOne({ _id: req.params.id });
+  const batch = await Batches.findOne({ _id: req.params.id }).populate(
+    "sections"
+  );
   res.status(200).json({ status: "success", data: batch });
 });

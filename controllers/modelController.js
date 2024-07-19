@@ -1,11 +1,18 @@
 import Model from "../models/modelsModel";
+import Notifications from "../models/notificationModel";
 import catchAsync from "../utils/catchAsync";
 
 export const uploadModel = catchAsync(async (req, res) => {
   const user = req.user;
-  console.log(req.body);
 
   const newModel = await Model.create({ ...req.body, teacher: user.id });
+
+  await Notifications.create({
+    title: "New model alert!",
+    description: `${user.nickname} uploaded ${newModel.modelTitle}. Be sure to check it out!`,
+    link: newModel._id,
+    department: newModel.department,
+  });
 
   res.status(200).json({ status: "success", data: newModel });
 });
@@ -23,7 +30,7 @@ export const getModels = catchAsync(async (req, res) => {
   if (user.role.toLowerCase() === "teacher")
     req.query = { ...req.query, teacher: user._id };
 
-  const query = Model.find(req.query).populate("teacher");
+  const query = Model.find(req.query).populate("teacher department");
   query.sort({ createdAt: -1 });
   const models = await query.exec();
 

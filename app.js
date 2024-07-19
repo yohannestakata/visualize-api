@@ -21,6 +21,7 @@ import sectionRouter from "./routes/sectionRoutes";
 import semesterRouter from "./routes/semesterRoutes";
 import classroomRouter from "./routes/classroomRoutes";
 import assistantRouter from "./routes/assistantRoutes";
+import notificationsRouter from "./routes/notificationRoutes";
 
 dotenv.config();
 
@@ -58,6 +59,7 @@ app.use("/sections", sectionRouter);
 app.use("/semesters", semesterRouter);
 app.use("/classrooms", classroomRouter);
 app.use("/assistant", assistantRouter);
+app.use("/notifications", notificationsRouter);
 
 app.all("*", (req, res, next) => {
   next(next(new AppError(`Can't find ${req.originalUrl} on this server`), 404));

@@ -26,11 +26,20 @@ export const getUsers = catchAsync(async (req, res) => {
 export const updateUser = catchAsync(async (req, res) => {
   const { sections, ...otherUpdates } = req.body;
 
-  const updatedUser = await User.findByIdAndUpdate(
-    req.params.id,
-    { $addToSet: { sections: sections }, ...otherUpdates },
-    { new: true }
-  );
+  let updatedUser;
+
+  if (sections)
+    updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { $addToSet: { sections: sections }, ...otherUpdates },
+      { new: true }
+    );
+  else
+    updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body },
+      { new: true }
+    );
 
   res.status(200).json({ status: "success", data: updatedUser });
 });
@@ -106,4 +115,30 @@ export const updateStreak = catchAsync(async (req, res) => {
   await user.save();
 
   res.status(200).json({ streak: user.streak });
+});
+
+export const assignRep = catchAsync(async (req, res) => {
+  const { sectId, uniId } = req.body;
+
+  const user = await User.findOne({ uniId });
+
+  const updatedUser = await User.findByIdAndUpdate(
+    user._id,
+    {
+      representing: sectId,
+    },
+    { new: true }
+  );
+
+  res.status(200).json({ status: "success", data: updatedUser });
+});
+
+export const removeFromSection = catchAsync(async (req, res) => {
+  const { section } = req.body;
+  const user = await User.findByIdAndUpdate(
+    req.params.id,
+    { $pull: { sections: section } },
+    { new: true }
+  );
+  res.status(200).json({ status: "success", data: user });
 });
